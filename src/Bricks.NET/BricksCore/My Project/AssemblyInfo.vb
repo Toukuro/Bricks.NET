@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' アセンブリ属性の値を確認します
 
-<Assembly: AssemblyTitle("ClassLibrary1")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("Bricks.NET Core")>
+<Assembly: AssemblyDescription("Bricks.NET コアライブラリ")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("ClassLibrary1")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyProduct("Bricks.NET")>
+<Assembly: AssemblyCopyright("Copyright ©  K.Adachi 2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 既定値にすることができます:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("0.0.0.0")>
+<Assembly: AssemblyFileVersion("0.0.0.0")>
