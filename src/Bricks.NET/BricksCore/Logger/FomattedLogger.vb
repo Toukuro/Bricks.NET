@@ -30,14 +30,14 @@ Namespace Logging
 #Region "コンストラクタ"
 
         ''' <summary>
-        ''' 
+        ''' デフォルトのコンストラクタ
         ''' </summary>
         Public Sub New()
             MyBase.New
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 出力先指定のコンストラクタ
         ''' </summary>
         ''' <param name="iLogAccessor"></param>
         Public Sub New(iLogAccessor As LogAccessor)
@@ -49,7 +49,7 @@ Namespace Logging
 #Region "プロパティ"
 
         ''' <summary>
-        ''' 
+        ''' デフォルトの出力書式の参照と設定
         ''' </summary>
         ''' <returns></returns>
         Public Shared Property DefaultFormat As String
@@ -62,7 +62,7 @@ Namespace Logging
         End Property
 
         ''' <summary>
-        ''' 
+        ''' このLoggerの出力書式の参照と設定
         ''' </summary>
         ''' <returns></returns>
         Public Property LogFormat As String = _DefaultFormat
@@ -85,7 +85,7 @@ Namespace Logging
             If accessor IsNot Nothing Then
                 With accessor
                     .Open()
-                    .Write(outMsg, iLevel)
+                    .Write(FormatMsg(outMsg, iLevel), iLevel)
                     .Close()
                 End With
             End If
@@ -101,7 +101,7 @@ Namespace Logging
             If accessor IsNot Nothing Then
                 With accessor
                     .Open()
-                    .Write(iMessage)
+                    .Write(FormatMsg(iMessage, iLevel), iLevel)
                     .Write(String.Format("Exception: {0}", iException.Message))
                     .Write(iException.StackTrace)
                     If iException.InnerException IsNot Nothing Then
@@ -112,17 +112,23 @@ Namespace Logging
             End If
         End Sub
 
-        Private Function FormatMsg(iLevel As OutputLevelEnum, iMsg As String) As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="iMsg"></param>
+        ''' <param name="iLevel"></param>
+        ''' <returns></returns>
+        Private Function FormatMsg(iMsg As String, iLevel As OutputLevelEnum) As String
             Dim outMsg As String = _LogFormat
             Dim proc As Process = System.Diagnostics.Process.GetCurrentProcess
 
-            outMsg = outMsg.Substring(KWD_TIMESTAMP, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff"))
-            outMsg = outMsg.Substring(KWD_LOGLEVEL, iLevel.ToString)
-            outMsg = outMsg.Substring(KWD_THREADNO, proc.Threads(0).Id)
-            outMsg = outMsg.Substring(KWD_CALLER, GetCaller)
-            outMsg = outMsg.Substring(KWD_MESSAGE, iMsg)
-            outMsg = outMsg.Substring(KWD_TAB, vbTab)
-            outMsg = outMsg.Substring(KWD_CRLF, vbCrLf)
+            outMsg = outMsg.Replace(KWD_TIMESTAMP, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff"))
+            outMsg = outMsg.Replace(KWD_LOGLEVEL, iLevel.ToString)
+            outMsg = outMsg.Replace(KWD_THREADNO, proc.Threads(0).Id)
+            outMsg = outMsg.Replace(KWD_CALLER, GetCaller)
+            outMsg = outMsg.Replace(KWD_MESSAGE, iMsg)
+            outMsg = outMsg.Replace(KWD_TAB, vbTab)
+            outMsg = outMsg.Replace(KWD_CRLF, vbCrLf)
 
             Return outMsg
         End Function
