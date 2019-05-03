@@ -29,7 +29,8 @@ Namespace Logging
     ''' </summary>
     Public Class Logger
 
-        Private accessor As LogAccessor = Nothing
+        ''' <summary>出力アクセサ</summary>
+        Protected accessor As LogAccessor = Nothing
 
 #Region "コンストラクタ"
 
@@ -43,7 +44,7 @@ Namespace Logging
         ''' <summary>
         ''' 出力先指定のコンストラクタ
         ''' </summary>
-        ''' <param name="iLogAccessor"></param>
+        ''' <param name="iLogAccessor">出力アクセサ</param>
         Public Sub New(iLogAccessor As LogAccessor)
             accessor = iLogAccessor
         End Sub
@@ -54,10 +55,20 @@ Namespace Logging
 
 #Region "情報"
 
+        ''' <summary>
+        ''' 情報出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Info(iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Info, iMessage, iData)
         End Sub
 
+        ''' <summary>
+        ''' 情報出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub Info(iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Info, iMessage, iException)
         End Sub
@@ -66,10 +77,20 @@ Namespace Logging
 
 #Region "詳細"
 
+        ''' <summary>
+        ''' 詳細出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Detail(iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Detail, iMessage, iData)
         End Sub
 
+        ''' <summary>
+        ''' 詳細出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub Detail(iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Detail, iMessage, iException)
         End Sub
@@ -78,10 +99,20 @@ Namespace Logging
 
 #Region "デバッグ"
 
+        ''' <summary>
+        ''' デバッグ出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Debug(iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Debug, iMessage, iData)
         End Sub
 
+        ''' <summary>
+        ''' デバッグ出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub Debug(iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Debug, iMessage, iException)
         End Sub
@@ -90,10 +121,20 @@ Namespace Logging
 
 #Region "警告"
 
+        ''' <summary>
+        ''' 警告出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Warning(iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Warning, iMessage, iData)
         End Sub
 
+        ''' <summary>
+        ''' 警告出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub Warning(iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Warning, iMessage, iException)
         End Sub
@@ -102,10 +143,20 @@ Namespace Logging
 
 #Region "エラー"
 
+        ''' <summary>
+        ''' エラー出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub [Error](iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Error, iMessage, iData)
         End Sub
 
+        ''' <summary>
+        ''' エラー出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub [Error](iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Error, iMessage, iException)
         End Sub
@@ -114,11 +165,21 @@ Namespace Logging
 
 #Region "致命的エラー"
 
+        ''' <summary>
+        ''' 致命的エラー出力（フォーマット指定）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Fatal(iMessage As String, ParamArray iData() As Object)
             Write(OutputLevelEnum.Fatal, iMessage, iData)
         End Sub
 
-        Public Overridable Sub Fagtal(iMessage As String, iException As Exception)
+        ''' <summary>
+        ''' 致命的エラー出力（例外出力）
+        ''' </summary>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
+        Public Overridable Sub Fatal(iMessage As String, iException As Exception)
             Write(OutputLevelEnum.Fatal, iMessage, iException)
         End Sub
 #End Region
@@ -126,11 +187,11 @@ Namespace Logging
 #Region "出力レベル指定"
 
         ''' <summary>
-        ''' 
+        ''' レベル指定出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iLevel"></param>
-        ''' <param name="iMessage"></param>
-        ''' <param name="iData"></param>
+        ''' <param name="iLevel">出力レベル</param>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
             Dim outMsg As String = If(iData.Length > 0, String.Format(iMessage, iData), iMessage)
 
@@ -144,11 +205,11 @@ Namespace Logging
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' レベル指定出力（例外出力）
         ''' </summary>
-        ''' <param name="iLevel"></param>
-        ''' <param name="iMessage"></param>
-        ''' <param name="iException"></param>
+        ''' <param name="iLevel">出力レベル</param>
+        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iException">例外</param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
             If accessor IsNot Nothing Then
                 With accessor
@@ -169,25 +230,6 @@ Namespace Logging
 #End Region
 
 #End Region
-
-        Public Function GetCaller(ParamArray iIgnoreModuleNames() As String) As String
-            Dim stkTrc As New StackTrace()
-            Dim stkFrm As StackFrame
-            Dim stkIdx As Integer = 0
-            Dim mtdInf As MethodBase
-            Dim ignoreNames As New ArrayList(iIgnoreModuleNames)
-            ignoreNames.Add(Me.GetType.Name)
-
-            Do
-                stkFrm = stkTrc.GetFrame(stkIdx)
-                mtdInf = stkFrm.GetMethod
-                stkIdx += 1
-            Loop While ignoreNames.Contains(mtdInf.DeclaringType.Name)
-
-            Dim caller As String = String.Format("{0}.{1}", mtdInf.DeclaringType.Name, mtdInf.Name)
-
-            Return caller
-        End Function
 
     End Class
 End Namespace
