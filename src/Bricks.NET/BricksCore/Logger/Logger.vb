@@ -33,12 +33,19 @@ Namespace Logging
 
 #Region "コンストラクタ"
 
+        ''' <summary>
+        ''' デフォルトのコンストラクタ
+        ''' </summary>
         Public Sub New()
             accessor = New NullAccessor
         End Sub
 
+        ''' <summary>
+        ''' 出力先指定のコンストラクタ
+        ''' </summary>
+        ''' <param name="iLogAccessor"></param>
         Public Sub New(iLogAccessor As LogAccessor)
-
+            accessor = iLogAccessor
         End Sub
 
 #End Region
@@ -48,7 +55,11 @@ Namespace Logging
 #Region "情報"
 
         Public Overridable Sub Info(iMessage As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Info, iMessage, iData)
+        End Sub
 
+        Public Overridable Sub Info(iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Info, iMessage, iException)
         End Sub
 
 #End Region
@@ -56,7 +67,11 @@ Namespace Logging
 #Region "詳細"
 
         Public Overridable Sub Detail(iMessage As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Detail, iMessage, iData)
+        End Sub
 
+        Public Overridable Sub Detail(iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Detail, iMessage, iException)
         End Sub
 
 #End Region
@@ -64,7 +79,11 @@ Namespace Logging
 #Region "デバッグ"
 
         Public Overridable Sub Debug(iMessage As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Debug, iMessage, iData)
+        End Sub
 
+        Public Overridable Sub Debug(iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Debug, iMessage, iException)
         End Sub
 
 #End Region
@@ -72,7 +91,11 @@ Namespace Logging
 #Region "警告"
 
         Public Overridable Sub Warning(iMessage As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Warning, iMessage, iData)
+        End Sub
 
+        Public Overridable Sub Warning(iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Warning, iMessage, iException)
         End Sub
 
 #End Region
@@ -80,7 +103,11 @@ Namespace Logging
 #Region "エラー"
 
         Public Overridable Sub [Error](iMessage As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Error, iMessage, iData)
+        End Sub
 
+        Public Overridable Sub [Error](iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Error, iMessage, iException)
         End Sub
 
 #End Region
@@ -88,15 +115,24 @@ Namespace Logging
 #Region "致命的エラー"
 
         Public Overridable Sub Fatal(iMessage As String, ParamArray iData() As Object)
-
+            Write(OutputLevelEnum.Fatal, iMessage, iData)
         End Sub
 
+        Public Overridable Sub Fagtal(iMessage As String, iException As Exception)
+            Write(OutputLevelEnum.Fatal, iMessage, iException)
+        End Sub
 #End Region
 
 #Region "出力レベル指定"
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="iLevel"></param>
+        ''' <param name="iMessage"></param>
+        ''' <param name="iData"></param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
-            Dim outMsg As String = String.Format(iMessage, iData)
+            Dim outMsg As String = If(iData.Length > 0, String.Format(iMessage, iData), iMessage)
 
             If accessor IsNot Nothing Then
                 With accessor
@@ -107,16 +143,24 @@ Namespace Logging
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="iLevel"></param>
+        ''' <param name="iMessage"></param>
+        ''' <param name="iException"></param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
             If accessor IsNot Nothing Then
                 With accessor
+                    Dim exMsg As String = "Exception"
                     .Open()
                     .Write(iMessage)
-                    .Write(String.Format("Exception: {0}", iException.Message))
-                    .Write(iException.StackTrace)
-                    If iException.InnerException IsNot Nothing Then
-
-                    End If
+                    While iException IsNot Nothing
+                        .Write(String.Format("{0}: {1}", exMsg, iException.Message))
+                        .Write(iException.StackTrace)
+                        iException = iException.InnerException
+                        exMsg = "Inner " & exMsg
+                    End While
                     .Close()
                 End With
             End If

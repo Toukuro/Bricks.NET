@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Logger\LogAccessor\LogAccessor.vb" />
     <Compile Include="Logger\LogAccessor\NullAccessor.vb" />
+    <Compile Include="Logger\FomattedLogger.vb" />
     <Compile Include="Logger\Logger.vb" />
     <Compile Include="Model\Model.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
