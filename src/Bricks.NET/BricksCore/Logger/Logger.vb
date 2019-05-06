@@ -195,13 +195,15 @@ Namespace Logging
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
             Dim outMsg As String = If(iData.Length > 0, String.Format(iMessage, iData), iMessage)
 
-            If accessor IsNot Nothing Then
-                With accessor
-                    .Open()
-                    .Write(outMsg, iLevel)
-                    .Close()
-                End With
+            If accessor Is Nothing Then
+                Return
             End If
+
+            With accessor
+                .Open()
+                .Write(outMsg, iLevel)
+                .Close()
+            End With
         End Sub
 
         ''' <summary>
@@ -211,20 +213,22 @@ Namespace Logging
         ''' <param name="iMessage">ログメッセージ</param>
         ''' <param name="iException">例外</param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
-            If accessor IsNot Nothing Then
-                With accessor
-                    Dim exMsg As String = "Exception"
-                    .Open()
-                    .Write(iMessage)
-                    While iException IsNot Nothing
-                        .Write(String.Format("{0}: {1}", exMsg, iException.Message))
-                        .Write(iException.StackTrace)
-                        iException = iException.InnerException
-                        exMsg = "Inner " & exMsg
-                    End While
-                    .Close()
-                End With
+            If accessor Is Nothing Then
+                Return
             End If
+
+            With accessor
+                Dim exMsg As String = "Exception"
+                .Open()
+                .Write(iMessage)
+                While iException IsNot Nothing
+                    .Write(String.Format("{0}: {1}", exMsg, iException.Message))
+                    .Write(iException.StackTrace)
+                    iException = iException.InnerException
+                    exMsg = "Inner " & exMsg
+                End While
+                .Close()
+            End With
         End Sub
 
 #End Region
