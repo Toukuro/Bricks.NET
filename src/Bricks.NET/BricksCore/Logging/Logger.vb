@@ -51,6 +51,16 @@ Namespace Logging
 
 #End Region
 
+#Region "プロパティ"
+
+        ''' <summary>
+        ''' 出力レベルの参照と設定
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property OutputLevel As OutputLevelEnum = OutputLevelEnum.All
+
+#End Region
+
 #Region "ログ出力メソッド"
 
 #Region "情報"
@@ -195,7 +205,7 @@ Namespace Logging
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
             Dim outMsg As String = If(iData.Length > 0, String.Format(iMessage, iData), iMessage)
 
-            If accessor Is Nothing Then
+            If accessor Is Nothing OrElse iLevel < OutputLevel Then
                 Return
             End If
 
@@ -213,7 +223,7 @@ Namespace Logging
         ''' <param name="iMessage">ログメッセージ</param>
         ''' <param name="iException">例外</param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
-            If accessor Is Nothing Then
+            If accessor Is Nothing OrElse iLevel < OutputLevel Then
                 Return
             End If
 

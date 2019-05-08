@@ -1,8 +1,7 @@
 ﻿Namespace Logging
 
     ''' <summary>
-    ''' NULLデバイスアクセサ
-    ''' 
+    ''' NULLデバイスアクセサ。
     ''' 何も出力しないアクセサ
     ''' </summary>
     Public Class NullAccessor
