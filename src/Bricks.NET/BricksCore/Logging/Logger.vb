@@ -30,7 +30,7 @@ Namespace Logging
     Public Class Logger
 
         ''' <summary>出力アクセサ</summary>
-        Protected accessor As LogAccessor = Nothing
+        Protected _accessor As LogAccessor = Nothing
 
 #Region "コンストラクタ"
 
@@ -59,6 +59,21 @@ Namespace Logging
         ''' <returns></returns>
         Public Property OutputLevel As OutputLevelEnum = OutputLevelEnum.All
 
+        ''' <summary>
+        ''' アクセサの参照と設定
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Accessor As LogAccessor
+            Get
+                Return _accessor
+            End Get
+            Set(value As LogAccessor)
+                _accessor = value
+                If _accessor Is Nothing Then
+                    _accessor = New NullAccessor
+                End If
+            End Set
+        End Property
 #End Region
 
 #Region "ログ出力メソッド"
