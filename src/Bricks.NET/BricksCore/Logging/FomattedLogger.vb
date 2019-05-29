@@ -26,12 +26,23 @@ Namespace Logging
         Public Const KWD_CRLF As String = "CRLF"
 
         ''' <summary>キーワードのパターン</summary>
-        Public Const KWD_PATTERN As String = "\{([A-Z9-0_]+)\}"
+        Public Const KWD_PATTERN As String = "\{([A-Z_][0-9A-Z_]*)\}"
 
         ''' <summary></summary>
-        Private Shared _DefaultFormat As String = "{TIMESTAMP} [{LOGLEVEL}] {CALLER} {MESSAGE}{CRLF}"
+        Private Shared _DefaultFormat As String = "{TIMESTAMP} [{LOGLEVEL}] {CALLER} {MESSAGE}"
+
+        Private Shared _IgnoreClasses As New ArrayList
 
 #Region "コンストラクタ"
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        Shared Sub New()
+            Dim myType As Type = Reflection.MethodBase.GetCurrentMethod.DeclaringType
+
+            AddIgnoreClassAndParent(myType)
+        End Sub
 
         ''' <summary>
         ''' デフォルトのコンストラクタ
@@ -73,6 +84,31 @@ Namespace Logging
 
 #End Region
 
+#Region "メソッド"
+
+        ''' <summary>
+        ''' 呼び出し元として無視するクラスを追加する
+        ''' </summary>
+        ''' <param name="iType"></param>
+        Public Shared Sub AddIgnoreClass(iType As Type)
+            _IgnoreClasses.Add(iType.Name)
+        End Sub
+
+        ''' <summary>
+        ''' 呼び出し元として無視するクラスとObjectクラスを除くその親のクラスを追加する
+        ''' </summary>
+        ''' <param name="iType"></param>
+        Public Shared Sub AddIgnoreClassAndParent(iType As Type)
+            Do While iType IsNot Nothing
+                If iType.Equals(GetType(Object)) Then
+                    Exit Do
+                End If
+                _IgnoreClasses.Add(iType.Name)
+                iType = iType.BaseType
+            Loop
+        End Sub
+#End Region
+
 #Region "ログ出力メソッド"
 
 #Region "出力レベル指定"
@@ -111,7 +147,6 @@ Namespace Logging
             Dim rex As New Regex(KWD_PATTERN)
             Do
                 Dim m As Match = rex.Match(pattern)
-                Dim m2 As Match = Nothing
                 Dim dt As String = String.Empty
 
                 If m Is Match.Empty Then
@@ -119,8 +154,7 @@ Namespace Logging
                     Exit Do
                 End If
 
-                m2 = m.Groups(1)
-                Select Case m2.Value
+                Select Case m.Groups(1).Value
                     Case KWD_TIMESTAMP
                         dt = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff")
                     Case KWD_LOGLEVEL
@@ -136,10 +170,10 @@ Namespace Logging
                     Case KWD_CRLF
                         dt = vbCrLf
                     Case Else
-                        dt = m2.Value
+                        dt = m.Groups(1).Value
                 End Select
 
-                outMsg.Append(pattern.Substring(0, m.Index + 1))
+                outMsg.Append(pattern.Substring(0, m.Index))
                 outMsg.Append(dt)
                 pattern = pattern.Substring(m.Index + m.Length)
             Loop Until String.IsNullOrEmpty(pattern)
@@ -161,14 +195,12 @@ Namespace Logging
             Dim stkFrm As StackFrame
             Dim stkIdx As Integer = 0
             Dim mtdInf As MethodBase
-            Dim ignoreNames As New ArrayList(iIgnoreModuleNames)
-            ignoreNames.Add(GetType(FormattedLogger).Name)
 
             Do
                 stkFrm = stkTrc.GetFrame(stkIdx)
                 mtdInf = stkFrm.GetMethod
                 stkIdx += 1
-            Loop While ignoreNames.Contains(mtdInf.DeclaringType.Name)
+            Loop While _IgnoreClasses.Contains(mtdInf.DeclaringType.Name)
 
             Dim caller As String = String.Format("{0}.{1}", mtdInf.DeclaringType.Name, mtdInf.Name)
 

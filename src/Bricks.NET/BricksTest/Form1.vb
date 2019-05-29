@@ -1,7 +1,7 @@
 ﻿Imports BricksCore
 Imports BricksForm
 
-Public Class Form1
+Public Class MainForm
 
 #Region "Form Events"
 
