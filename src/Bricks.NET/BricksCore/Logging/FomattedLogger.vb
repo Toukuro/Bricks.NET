@@ -28,15 +28,15 @@ Namespace Logging
         ''' <summary>キーワードのパターン</summary>
         Public Const KWD_PATTERN As String = "\{([A-Z_][0-9A-Z_]*)\}"
 
-        ''' <summary></summary>
+        ''' <summary>出力フォーマット</summary>
         Private Shared _DefaultFormat As String = "{TIMESTAMP} [{LOGLEVEL}] {CALLER} {MESSAGE}"
-
+        ''' <summary>呼び出し元として無視するクラスのリスト</summary>
         Private Shared _IgnoreClasses As New ArrayList
 
 #Region "コンストラクタ"
 
         ''' <summary>
-        ''' 
+        ''' クラスコンストラクタ
         ''' </summary>
         Shared Sub New()
             Dim myType As Type = Reflection.MethodBase.GetCurrentMethod.DeclaringType
@@ -54,7 +54,7 @@ Namespace Logging
         ''' <summary>
         ''' 出力先指定のコンストラクタ
         ''' </summary>
-        ''' <param name="iLogAccessor"></param>
+        ''' <param name="iLogAccessor">ログの出力先</param>
         Public Sub New(iLogAccessor As LogAccessor)
             MyBase.New(iLogAccessor)
         End Sub
@@ -66,7 +66,7 @@ Namespace Logging
         ''' <summary>
         ''' デフォルトの出力書式の参照と設定
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>デフォルトの出力書式を返却する</returns>
         Public Shared Property DefaultFormat As String
             Get
                 Return _DefaultFormat
@@ -79,7 +79,7 @@ Namespace Logging
         ''' <summary>
         ''' このLoggerの出力書式の参照と設定
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>このロガーの出力書式を返却する</returns>
         Public Property LogFormat As String = _DefaultFormat
 
 #End Region
@@ -89,7 +89,7 @@ Namespace Logging
         ''' <summary>
         ''' 呼び出し元として無視するクラスを追加する
         ''' </summary>
-        ''' <param name="iType"></param>
+        ''' <param name="iType">無視するクラス</param>
         Public Shared Sub AddIgnoreClass(iType As Type)
             _IgnoreClasses.Add(iType.Name)
         End Sub
@@ -97,7 +97,7 @@ Namespace Logging
         ''' <summary>
         ''' 呼び出し元として無視するクラスとObjectクラスを除くその親のクラスを追加する
         ''' </summary>
-        ''' <param name="iType"></param>
+        ''' <param name="iType">無視するクラス</param>
         Public Shared Sub AddIgnoreClassAndParent(iType As Type)
             Do While iType IsNot Nothing
                 If iType.Equals(GetType(Object)) Then
@@ -116,9 +116,9 @@ Namespace Logging
         ''' <summary>
         ''' レベル指定出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iLevel"></param>
-        ''' <param name="iMessage"></param>
-        ''' <param name="iData"></param>
+        ''' <param name="iLevel">ログ出力レベル</param>
+        ''' <param name="iMessage">出力メッセージ</param>
+        ''' <param name="iData">埋め込みデータ</param>
         Public Overrides Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
             MyBase.Write(iLevel, FormatMsg(iMessage, iLevel), iData)
         End Sub
@@ -126,9 +126,9 @@ Namespace Logging
         ''' <summary>
         ''' レベル指定出力（例外出力）
         ''' </summary>
-        ''' <param name="iLevel"></param>
-        ''' <param name="iMessage"></param>
-        ''' <param name="iException"></param>
+        ''' <param name="iLevel">ログ出力レベル</param>
+        ''' <param name="iMessage">出力メッセージ</param>
+        ''' <param name="iException">例外オブジェクト</param>
         Public Overrides Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
             MyBase.Write(iLevel, FormatMsg(iMessage, iLevel), iException)
         End Sub
@@ -136,8 +136,8 @@ Namespace Logging
         ''' <summary>
         ''' ログフォーマットのキーワード埋め込み処理
         ''' </summary>
-        ''' <param name="iMsg"></param>
-        ''' <param name="iLevel"></param>
+        ''' <param name="iMsg">出力メッセージ</param>
+        ''' <param name="iLevel">ログ出力レベル</param>
         ''' <returns></returns>
         Private Function FormatMsg(iMsg As String, iLevel As OutputLevelEnum) As String
             Dim pattern As String = _LogFormat
@@ -188,9 +188,8 @@ Namespace Logging
         ''' <summary>
         ''' 呼び出し元のメソッド名を取得
         ''' </summary>
-        ''' <param name="iIgnoreModuleNames"></param>
-        ''' <returns></returns>
-        Public Shared Function GetCaller(ParamArray iIgnoreModuleNames() As String) As String
+        ''' <returns>呼び出し元のメソッド名</returns>
+        Public Shared Function GetCaller() As String
             Dim stkTrc As New StackTrace()
             Dim stkFrm As StackFrame
             Dim stkIdx As Integer = 0

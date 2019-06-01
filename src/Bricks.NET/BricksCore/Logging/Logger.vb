@@ -32,6 +32,9 @@ Namespace Logging
         ''' <summary>出力アクセサ</summary>
         Protected _accessor As LogAccessor = Nothing
 
+        ''' <summary>排他用ロックオブジェクト</summary>
+        Private _lockObj As New Object
+
 #Region "コンストラクタ"
 
         ''' <summary>
@@ -224,11 +227,13 @@ Namespace Logging
                 Return
             End If
 
-            With accessor
-                .Open()
-                .Write(outMsg, iLevel)
-                .Close()
-            End With
+            SyncLock _lockObj
+                With Accessor
+                    .Open()
+                    .Write(outMsg, iLevel)
+                    .Close()
+                End With
+            End SyncLock
         End Sub
 
         ''' <summary>
@@ -242,18 +247,20 @@ Namespace Logging
                 Return
             End If
 
-            With accessor
-                Dim exMsg As String = "Exception"
-                .Open()
-                .Write(iMessage)
-                While iException IsNot Nothing
-                    .Write(String.Format("{0}: {1}", exMsg, iException.Message))
-                    .Write(iException.StackTrace)
-                    iException = iException.InnerException
-                    exMsg = "Inner " & exMsg
-                End While
-                .Close()
-            End With
+            SyncLock _lockObj
+                With Accessor
+                    Dim exMsg As String = "Exception"
+                    .Open()
+                    .Write(iMessage)
+                    While iException IsNot Nothing
+                        .Write(String.Format("{0}: {1}", exMsg, iException.Message))
+                        .Write(iException.StackTrace)
+                        iException = iException.InnerException
+                        exMsg = "Inner " & exMsg
+                    End While
+                    .Close()
+                End With
+            End SyncLock
         End Sub
 
 #End Region
