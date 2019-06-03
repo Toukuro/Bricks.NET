@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{51CC8740-4DA1-408F-93BD-D28925CC6099}</ProjectGuid>
+    <ProjectGuid>{D1D18E65-1436-43D7-AC59-40F626C9EC19}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BricksCore</RootNamespace>
-    <AssemblyName>BricksCore</AssemblyName>
+    <RootNamespace>BricksForm</RootNamespace>
+    <AssemblyName>BricksForm</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -20,7 +20,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>BricksCore.xml</DocumentationFile>
+    <DocumentationFile>BricksForm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -29,7 +29,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>BricksCore.xml</DocumentationFile>
+    <DocumentationFile>BricksForm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -47,6 +47,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +56,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Import Include="BricksCore.Logging" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
@@ -61,16 +64,12 @@
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logging\LogAccessor\FileAccessor.vb" />
-    <Compile Include="Logging\LogAccessor\LogAccessor.vb" />
-    <Compile Include="Logging\LogAccessor\NullAccessor.vb" />
-    <Compile Include="Logging\FomattedLogger.vb" />
-    <Compile Include="Logging\Logger.vb" />
-    <Compile Include="Model\Model.vb" />
+    <Compile Include="Logging\LogAccessor\FormAccessor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -107,7 +106,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataBase\" />
+    <ProjectReference Include="..\BricksCore\BricksCore.vbproj">
+      <Project>{51cc8740-4da1-408f-93bd-d28925cc6099}</Project>
+      <Name>BricksCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
