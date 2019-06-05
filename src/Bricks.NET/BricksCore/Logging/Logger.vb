@@ -7,7 +7,7 @@ Namespace Logging
     ''' </summary>
     Public Enum OutputLevelEnum
         ''' <summary>全て</summary>
-        All
+        All = 0
         ''' <summary>デバッグ</summary>
         Debug
         ''' <summary>詳細</summary>
@@ -21,7 +21,7 @@ Namespace Logging
         ''' <summary>致命的エラー</summary>
         Fatal
         ''' <summary>出力なし</summary>
-        None
+        None = 9
     End Enum
 
     ''' <summary>
@@ -86,10 +86,10 @@ Namespace Logging
         ''' <summary>
         ''' 情報出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Info(iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Info, iMessage, iData)
+        Public Overridable Sub Info(iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Info, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -108,10 +108,10 @@ Namespace Logging
         ''' <summary>
         ''' 詳細出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Detail(iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Detail, iMessage, iData)
+        Public Overridable Sub Detail(iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Detail, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -130,10 +130,10 @@ Namespace Logging
         ''' <summary>
         ''' デバッグ出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Debug(iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Debug, iMessage, iData)
+        Public Overridable Sub Debug(iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Debug, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -152,10 +152,10 @@ Namespace Logging
         ''' <summary>
         ''' 警告出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Warning(iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Warning, iMessage, iData)
+        Public Overridable Sub Warning(iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Warning, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -174,10 +174,10 @@ Namespace Logging
         ''' <summary>
         ''' エラー出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub [Error](iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Error, iMessage, iData)
+        Public Overridable Sub [Error](iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Error, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -196,10 +196,10 @@ Namespace Logging
         ''' <summary>
         ''' 致命的エラー出力（フォーマット指定）
         ''' </summary>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Fatal(iMessage As String, ParamArray iData() As Object)
-            Write(OutputLevelEnum.Fatal, iMessage, iData)
+        Public Overridable Sub Fatal(iMsgFormat As String, ParamArray iData() As Object)
+            Write(OutputLevelEnum.Fatal, iMsgFormat, iData)
         End Sub
 
         ''' <summary>
@@ -218,11 +218,12 @@ Namespace Logging
         ''' レベル指定出力（フォーマット指定）
         ''' </summary>
         ''' <param name="iLevel">出力レベル</param>
-        ''' <param name="iMessage">ログメッセージ</param>
+        ''' <param name="iMsgFormat">ログメッセージ</param>
         ''' <param name="iData">埋め込みデータ</param>
-        Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, ParamArray iData() As Object)
-            Dim outMsg As String = If(iData.Length > 0, String.Format(iMessage, iData), iMessage)
+        Public Overridable Sub Write(iLevel As OutputLevelEnum, iMsgFormat As String, ParamArray iData() As Object)
+            Dim outMsg As String = If(iData.Length > 0, String.Format(iMsgFormat, iData), iMsgFormat)
 
+            'TODO: iLevelがAllやNoneだった場合は、パラメータエラーにしたい。
             If accessor Is Nothing OrElse iLevel < OutputLevel Then
                 Return
             End If
@@ -243,7 +244,8 @@ Namespace Logging
         ''' <param name="iMessage">ログメッセージ</param>
         ''' <param name="iException">例外</param>
         Public Overridable Sub Write(iLevel As OutputLevelEnum, iMessage As String, iException As Exception)
-            If accessor Is Nothing OrElse iLevel < OutputLevel Then
+            'TODO: iLevelがAllやNoneだった場合は、パラメータエラーにしたい。
+            If Accessor Is Nothing OrElse iLevel < OutputLevel Then
                 Return
             End If
 
