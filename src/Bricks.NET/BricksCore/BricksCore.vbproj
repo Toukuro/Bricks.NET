@@ -65,6 +65,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBase\Ado\AdoCommand.vb" />
+    <Compile Include="DataBase\Ado\AdoAccess.vb" />
+    <Compile Include="DataBase\Ado\AdoDataBaseException.vb" />
+    <Compile Include="DataBase\Ado\AdoTableBase.vb" />
+    <Compile Include="DataBase\DataBaseException.vb" />
     <Compile Include="Logging\LogAccessor\FileAccessor.vb" />
     <Compile Include="Logging\LogAccessor\LogAccessor.vb" />
     <Compile Include="Logging\LogAccessor\NullAccessor.vb" />
@@ -106,8 +111,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataBase\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
