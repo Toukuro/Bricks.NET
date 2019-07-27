@@ -59,5 +59,14 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  テストです に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property TestString() As String
+            Get
+                Return ResourceManager.GetString("TestString", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

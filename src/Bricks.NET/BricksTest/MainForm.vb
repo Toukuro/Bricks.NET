@@ -10,7 +10,7 @@ Public Class MainForm
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim logfname As String = String.Format("Test-{0:yyyyMMdd}.log", DateTime.Today)
         TestLog = New Logging.FormattedLogger(New Logging.FileAccessor(logfname))
-
+        Dim s As String = My.Resources.ResourceManager.GetString("TestString")
         TestLog.Info("======== Bricks Test Start.")
         T01_Init()
     End Sub

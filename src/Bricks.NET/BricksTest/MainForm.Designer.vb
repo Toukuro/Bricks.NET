@@ -359,7 +359,7 @@ Partial Class MainForm
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(511, 239)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.Text = "Message"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'txtLog

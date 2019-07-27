@@ -65,11 +65,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\BricksException.vb" />
     <Compile Include="Logging\LogAccessor\FileAccessor.vb" />
     <Compile Include="Logging\LogAccessor\LogAccessor.vb" />
     <Compile Include="Logging\LogAccessor\NullAccessor.vb" />
     <Compile Include="Logging\FomattedLogger.vb" />
     <Compile Include="Logging\Logger.vb" />
+    <Compile Include="Message\BricksMessageException.vb" />
+    <Compile Include="Message\MessageSource\FileResourceMessage.vb" />
+    <Compile Include="Message\MessageSource\IMessageSource.vb" />
+    <Compile Include="Message\Message.vb" />
+    <Compile Include="Message\MessageSource\ResourceMessage.vb" />
+    <Compile Include="Message\MessageSource\StringResourceMessage.vb" />
     <Compile Include="Model\Model.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
