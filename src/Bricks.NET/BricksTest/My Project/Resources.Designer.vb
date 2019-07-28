@@ -61,6 +61,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  This is Test at ENG に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property ENG_TestString() As String
+            Get
+                Return ResourceManager.GetString("ENG_TestString", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  日本語のテストです に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property JPN_TestString() As String
+            Get
+                Return ResourceManager.GetString("JPN_TestString", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  テストです に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property TestString() As String

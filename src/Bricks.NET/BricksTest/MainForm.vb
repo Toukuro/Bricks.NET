@@ -13,6 +13,7 @@ Public Class MainForm
         Dim s As String = My.Resources.ResourceManager.GetString("TestString")
         TestLog.Info("======== Bricks Test Start.")
         T01_Init()
+        T02_Init()
     End Sub
 
     Private Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
@@ -126,4 +127,43 @@ Public Class MainForm
 
 #End Region
 
+#Region "Message"
+
+    Private _Message As Message.Message
+
+    Private Sub T02_Init()
+        TestLog.Info("method start")
+        Dim msgSrc As New Message.StringResourceMessage(My.Resources.ResourceManager)
+        _Message = New Message.Message(msgSrc)
+        TestLog.Info("method end")
+    End Sub
+
+    Private Sub T02_btnSet_Click(sender As Object, e As EventArgs) Handles T02_btnSet.Click
+        TestLog.Info("method start")
+
+        Dim msgSrc As Message.ResourceMessage = Nothing
+
+        Select Case T02_cmbMsgSource.SelectedItem
+            Case "StringResourceMessage"
+                msgSrc = New Message.StringResourceMessage(My.Resources.ResourceManager)
+            Case "FileResourceMessage"
+        End Select
+
+        If msgSrc IsNot Nothing Then
+            _Message = New Message.Message(msgSrc)
+            _Message.Language = T02_cmbLang.SelectedItem
+        End If
+
+        TestLog.Info("method end")
+    End Sub
+
+    Private Sub T02_btnGet_Click(sender As Object, e As EventArgs) Handles T02_btnGet.Click
+        TestLog.Info("method start")
+
+        T02_lblMessage.Text = _Message.GetMessage(T02_txtMsgId.Text)
+
+        TestLog.Info("method end")
+    End Sub
+
+#End Region
 End Class

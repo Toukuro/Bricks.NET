@@ -50,7 +50,18 @@ Partial Class MainForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.T01_txtOption = New System.Windows.Forms.TextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.T02_btnGet = New System.Windows.Forms.Button()
+        Me.T02_lblMessage = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.T02_cmbMsgSource = New System.Windows.Forms.ComboBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.T02_txtMsgId = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.T02_cmbLang = New System.Windows.Forms.ComboBox()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.txtLog = New System.Windows.Forms.TextBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.T02_btnSet = New System.Windows.Forms.Button()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -58,6 +69,8 @@ Partial Class MainForm
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -354,6 +367,12 @@ Partial Class MainForm
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.GroupBox2)
+        Me.TabPage2.Controls.Add(Me.T02_btnGet)
+        Me.TabPage2.Controls.Add(Me.T02_lblMessage)
+        Me.TabPage2.Controls.Add(Me.Label11)
+        Me.TabPage2.Controls.Add(Me.T02_txtMsgId)
+        Me.TabPage2.Controls.Add(Me.Label10)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
@@ -361,6 +380,87 @@ Partial Class MainForm
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Message"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'T02_btnGet
+        '
+        Me.T02_btnGet.Location = New System.Drawing.Point(297, 60)
+        Me.T02_btnGet.Name = "T02_btnGet"
+        Me.T02_btnGet.Size = New System.Drawing.Size(75, 23)
+        Me.T02_btnGet.TabIndex = 8
+        Me.T02_btnGet.Text = "GET"
+        Me.T02_btnGet.UseVisualStyleBackColor = True
+        '
+        'T02_lblMessage
+        '
+        Me.T02_lblMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.T02_lblMessage.Location = New System.Drawing.Point(70, 87)
+        Me.T02_lblMessage.Margin = New System.Windows.Forms.Padding(3)
+        Me.T02_lblMessage.Name = "T02_lblMessage"
+        Me.T02_lblMessage.Size = New System.Drawing.Size(300, 20)
+        Me.T02_lblMessage.TabIndex = 7
+        Me.T02_lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(6, 21)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(87, 12)
+        Me.Label12.TabIndex = 6
+        Me.Label12.Text = "MessageSource:"
+        '
+        'T02_cmbMsgSource
+        '
+        Me.T02_cmbMsgSource.FormattingEnabled = True
+        Me.T02_cmbMsgSource.Items.AddRange(New Object() {"StringResourceMessage", "FileResourceMessage"})
+        Me.T02_cmbMsgSource.Location = New System.Drawing.Point(99, 18)
+        Me.T02_cmbMsgSource.Name = "T02_cmbMsgSource"
+        Me.T02_cmbMsgSource.Size = New System.Drawing.Size(150, 20)
+        Me.T02_cmbMsgSource.TabIndex = 5
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(12, 91)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(52, 12)
+        Me.Label11.TabIndex = 4
+        Me.Label11.Text = "Message:"
+        '
+        'T02_txtMsgId
+        '
+        Me.T02_txtMsgId.Location = New System.Drawing.Point(70, 62)
+        Me.T02_txtMsgId.Name = "T02_txtMsgId"
+        Me.T02_txtMsgId.Size = New System.Drawing.Size(200, 19)
+        Me.T02_txtMsgId.TabIndex = 3
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(12, 65)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(37, 12)
+        Me.Label10.TabIndex = 2
+        Me.Label10.Text = "MsgId:"
+        '
+        'T02_cmbLang
+        '
+        Me.T02_cmbLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.T02_cmbLang.FormattingEnabled = True
+        Me.T02_cmbLang.Items.AddRange(New Object() {" ", "JPN", "ENG"})
+        Me.T02_cmbLang.Location = New System.Drawing.Point(316, 18)
+        Me.T02_cmbLang.Name = "T02_cmbLang"
+        Me.T02_cmbLang.Size = New System.Drawing.Size(50, 20)
+        Me.T02_cmbLang.TabIndex = 1
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(255, 21)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(55, 12)
+        Me.Label9.TabIndex = 0
+        Me.Label9.Text = "Language:"
         '
         'txtLog
         '
@@ -370,6 +470,33 @@ Partial Class MainForm
         Me.txtLog.Name = "txtLog"
         Me.txtLog.Size = New System.Drawing.Size(519, 253)
         Me.txtLog.TabIndex = 0
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.T02_btnSet)
+        Me.GroupBox2.Controls.Add(Me.Label12)
+        Me.GroupBox2.Controls.Add(Me.T02_cmbMsgSource)
+        Me.GroupBox2.Controls.Add(Me.Label9)
+        Me.GroupBox2.Controls.Add(Me.T02_cmbLang)
+        Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(499, 50)
+        Me.GroupBox2.TabIndex = 9
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Settings"
+        '
+        'T02_btnSet
+        '
+        Me.T02_btnSet.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.T02_btnSet.Location = New System.Drawing.Point(418, 16)
+        Me.T02_btnSet.Name = "T02_btnSet"
+        Me.T02_btnSet.Size = New System.Drawing.Size(75, 23)
+        Me.T02_btnSet.TabIndex = 9
+        Me.T02_btnSet.Text = "SET"
+        Me.T02_btnSet.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -389,6 +516,10 @@ Partial Class MainForm
         Me.TabPage1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -422,4 +553,15 @@ Partial Class MainForm
     Friend WithEvents T01_btnInfo As Button
     Friend WithEvents T01_btnDetail As Button
     Friend WithEvents T01_txtOption As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents T02_txtMsgId As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents T02_cmbLang As ComboBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents T02_lblMessage As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents T02_cmbMsgSource As ComboBox
+    Friend WithEvents T02_btnGet As Button
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents T02_btnSet As Button
 End Class

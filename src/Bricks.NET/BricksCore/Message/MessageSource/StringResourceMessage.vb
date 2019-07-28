@@ -21,7 +21,7 @@
         ''' <param name="iLang"></param>
         ''' <returns></returns>
         Public Overrides Function GetMessageInfo(iMsgId As String, iLang As String) As Object
-            Dim msgInfo As Object = _Resource.GetString(String.Format("{1}.{0}", iMsgId, iLang))
+            Dim msgInfo As Object = _Resource.GetString(String.Format("{1}_{0}", iMsgId, iLang))
             If msgInfo Is Nothing Then
                 msgInfo = _Resource.GetString(iMsgId)
             End If
